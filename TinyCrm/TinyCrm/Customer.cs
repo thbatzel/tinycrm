@@ -4,6 +4,7 @@ namespace TinyCrm
 {
     public class Customer
     {
+        public string CustomerId { get; set; }
         public DateTime Created { get; private set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -13,6 +14,7 @@ namespace TinyCrm
         public decimal TotalGross { get; private set; }
         public bool IsActive { get; set; }
         public int Age { get; set; }
+
         public List<Order> ListOfOrders;
 
         public Customer(string vatNumber)
