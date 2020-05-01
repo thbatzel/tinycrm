@@ -17,6 +17,13 @@ namespace TinyCrm
 
         public List<Order> ListOfOrders;
 
+
+
+        public Customer()
+        {
+            ListOfOrders = new List<Order>();
+        }
+
         public Customer(string vatNumber)
         {
             if (!IsValidVat(vatNumber))

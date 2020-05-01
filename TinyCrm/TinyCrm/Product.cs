@@ -9,6 +9,10 @@ namespace TinyCrm
         public string Name { get; set; }
         public decimal Price { get; set; }
 
+        public Product()
+        {
+
+        }
 
         public Product(string productid,string name,string description,decimal price)
         {
