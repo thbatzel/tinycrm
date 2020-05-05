@@ -4,9 +4,10 @@ namespace TinyCrm
 {
     public class Order
     {
-        public string OrderId { get; set; }
+        public int OrderId { get; set; }
         public string DeliveryAddress { get; set; }
         public decimal TotalAmount { get; set; }
+        Customer Customer;
         public List<Product> ListOfProduct;
 
 
@@ -15,7 +16,7 @@ namespace TinyCrm
             //ListOfProduct.Add(new Product());
         }
 
-        public Order(string orderid,string deliveryaddress,int[] x)//,int x,List<Product>lista)
+        public Order(int orderid,string deliveryaddress,int[] x)//,int x,List<Product>lista)
         {
             ListOfProduct = new List<Product>();
             OrderId = orderid;
@@ -28,6 +29,12 @@ namespace TinyCrm
             }
             Console.WriteLine(TotalAmount);
         }
+
+        //public string GenerateID()
+        //{
+        //    OrderId = Guid.NewGuid().ToString("N");
+        //    return OrderId;
+        //}
 
 
     }

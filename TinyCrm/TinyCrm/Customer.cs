@@ -4,16 +4,18 @@ namespace TinyCrm
 {
     public class Customer
     {
-        public string CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public DateTime Created { get; private set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string VatNumber { get; private set; }
+        public string VatNumber { get; set; }
         public string Phone { get; set; }
         public decimal TotalGross { get; private set; }
         public bool IsActive { get; set; }
         public int Age { get; set; }
+        public string Adress { get; set; }
+        public DateTime Dob { get; set; }
 
         public List<Order> ListOfOrders;
 
