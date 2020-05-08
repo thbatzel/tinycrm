@@ -4,26 +4,36 @@ namespace TinyCrm
 {
     public class Customer
     {
+        //public int CustomerId { get; set; }
+        //public DateTime Created { get; private set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string Email { get; set; }
+        //public string VatNumber { get; set; }
+        public string Phone { get; set; }
+        //public decimal TotalGross { get; private set; }
+        //public bool IsActive { get; set; }
+        //public int Age { get; set; }
+        //public string Adress { get; set; }
+        //public DateTime Dob { get; set; }
+
+        //public List<Order> ListOfOrders { get; set; }
+
         public int CustomerId { get; set; }
-        public DateTime Created { get; private set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public DateTime Created { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public string Email { get; set; }
         public string VatNumber { get; set; }
-        public string Phone { get; set; }
-        public decimal TotalGross { get; private set; }
+        public decimal TotalGross { get; set; }
         public bool IsActive { get; set; }
-        public int Age { get; set; }
-        public string Adress { get; set; }
-        public DateTime Dob { get; set; }
 
-        public List<Order> ListOfOrders;
-
+        public List<Order> Orders { get; set; }
 
 
         public Customer()
         {
-            ListOfOrders = new List<Order>();
+            Orders = new List<Order>();
         }
 
         public Customer(string vatNumber)

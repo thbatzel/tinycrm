@@ -83,30 +83,178 @@ namespace TinyCrm
 
             //Console.WriteLine(query);
 
-            //insert 
+
+            //insert
             var tinycrmdbcontext = new TinyCrmDbContext();
             var customer = new Customer()
             {
-                FirstName = "Thanos",
-                LastName = "Batzelios",
-                Email = "th.batzel@gmail.com"
+                Firstname = "Xaris",
+                Lastname = "Mpouras",
+                Email = "mpouras.gr"
             };
+
             tinycrmdbcontext.Add(customer);
             tinycrmdbcontext.SaveChanges();
 
-            //get
+            var petrogiannos = new Customer()
+            {
+                Firstname = "Dimitris",
+                Lastname = "Petrogiannos",
+                Email = "petrogiannos.gr"
+            };
 
-            var customer2=tinycrmdbcontext.Set<Customer>().Where(c => c.CustomerId == 2).SingleOrDefault();
+            tinycrmdbcontext.Add(petrogiannos);
+            tinycrmdbcontext.SaveChanges();
 
-            //update
+            var thbatzel = new Customer()
+            {
+                Firstname = "Thanos",
+                Lastname = "Batzelios",
+                Email = "th.batzel@gmail.com"
+            };
+
+            tinycrmdbcontext.Add(thbatzel);
+            tinycrmdbcontext.SaveChanges();
+
+
+
+            var customer2 = tinycrmdbcontext
+            .Set<Customer>()
+            .Where(c => c.CustomerId == customer.CustomerId)
+            .SingleOrDefault();
 
             customer2.VatNumber = "123456789";
             tinycrmdbcontext.SaveChanges();
 
-            //delete
-            tinycrmdbcontext.Remove(customer2);
+
+            var product = new Product()
+            {
+                Category = ProductCategory.Mobiles,
+                Name = "IPhone 100",
+                Price = 1500M
+            };
+
+            tinycrmdbcontext.Add(product);
             tinycrmdbcontext.SaveChanges();
 
+            var product2 = new Product()
+            {
+                Category = ProductCategory.Mobiles,
+                Name = "Sumsung",
+                Price = 1500M
+            };
+
+            var order = new Order()
+            {
+                DeliveryAddress = "Athina TK 15343"
+            };
+
+            order.OrderProducts.Add(
+                new OrderProduct()
+                {
+                    Product = product2
+                });
+
+            var customerWithOrders = new Customer()
+            {
+                Firstname = "Dimitris",
+                Lastname = "Tzempentzis",
+                Email = "dtzempentzis@mail.com"
+            };
+
+            customerWithOrders.Orders.Add(order);
+
+            tinycrmdbcontext.Add(customerWithOrders);
+            tinycrmdbcontext.SaveChanges();
+
+
+            var results = SearchCustomers(
+                new SearchCustomerOptions()
+            {
+                VatNumber = "117003949"
+            }, tinycrmdbcontext)
+            .Where(c => c.TotalGross > 500M)
+            .Any();
+
         }
+
+        public static IQueryable<Customer> SearchCustomers(
+            SearchCustomerOptions options, TinyCrmDbContext dbContext)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            var query = dbContext
+                .Set<Customer>()
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(options.Firstname))
+            {
+                query = query.Where(c => c.Firstname == options.Firstname);
+            }
+
+            if (!string.IsNullOrWhiteSpace(options.VatNumber))
+            {
+                query = query.Where(c => c.VatNumber == options.VatNumber);
+            }
+
+            if (options.CustomerId != null)
+            {
+                query = query.Where(c => c.CustomerId == options.CustomerId.Value);
+            }
+
+            if (options.CreateFrom != null)
+            {
+                query = query.Where(c => c.Created >= options.CreateFrom);
+            }
+
+            query = query.Take(500);
+
+            return query;
+        }
+
+
+        public static IQueryable<Product> SearchProduct(SearchProductOptions options)
+        {
+            if (options == null)
+            {
+                //throw new ArgumentNullException("NULL Option");
+                return null;
+            }
+
+            using (var dbcontex = new TinyCrmDbContext()) // θα εχεις προβλημα με το using 
+            {
+                var query = dbcontex.Set<Product>().AsQueryable();
+                //if (!string.IsNullOrWhiteSpace(options.Categories))
+                //{
+                //    query = query.Where(p => p.ProductCategory == options.Categories);
+                //}
+
+                if (options.ProductId != null)
+                {
+                    query = query.Where(p => p.ProductId == options.ProductId.Value);
+                }
+
+                if (options.PriceFrom != null)
+                {
+                    query = query.Where(c => c.Price >= options.PriceFrom);
+                }
+
+                if (options.PriceTo != null)
+                {
+                    query = query.Where(c => c.Price >= options.PriceTo);
+                }
+
+
+                query = query.Take(500);
+                return query;
+            }
+
+        }
+
+
+
     }
 }

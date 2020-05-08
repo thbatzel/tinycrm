@@ -5,20 +5,24 @@ namespace TinyCrm
     public class Order
     {
         public int OrderId { get; set; }
+        public DateTimeOffset Created { get; set; }
         public string DeliveryAddress { get; set; }
         public decimal TotalAmount { get; set; }
-        Customer Customer;
-        public List<Product> ListOfProduct;
+
+        public List<OrderProduct> OrderProducts { get; set; }
+
 
 
         public Order()
         {
+            Created = DateTimeOffset.Now;
+            OrderProducts = new List<OrderProduct>();
             //ListOfProduct.Add(new Product());
         }
 
         public Order(int orderid,string deliveryaddress,int[] x)//,int x,List<Product>lista)
         {
-            ListOfProduct = new List<Product>();
+            //ListOfProduct = new List<Product>();
             OrderId = orderid;
             DeliveryAddress = deliveryaddress;
            // Console.WriteLine(Program.listA[x].ProductId);
