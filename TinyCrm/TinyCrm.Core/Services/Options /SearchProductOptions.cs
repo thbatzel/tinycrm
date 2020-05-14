@@ -1,5 +1,7 @@
 ﻿using System;
-namespace TinyCrm
+using TinyCrm.Core.Model;
+
+namespace TinyCrm.Core.Services.Options
 {
     public class SearchProductOptions
     {
